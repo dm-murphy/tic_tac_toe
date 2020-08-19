@@ -1,3 +1,37 @@
+class Game
+
+  def initialize
+    @board = Board.new
+    @players = Players.new
+  end
+
+  def start_game
+    until end_game
+      @board.display_board
+      current_player_pick = @players.get_current_player_pick
+      current_player_position = current_player_pick - 1
+      current_player = @players.show_current_player 
+        if @board.mark_position(current_player_position, current_player)
+          @players.swap_player
+        end
+    end
+  end
+
+  def end_game
+    if @board.check_win
+      @board.display_board
+      @players.swap_player
+      winner = @players.show_current_player
+      puts "#{winner} wins!"
+      true
+    elsif @board.check_full
+      @board.display_board
+      puts "Tie. Game over."
+      true
+    end
+  end
+end
+
 class Board
 
   def initialize
@@ -16,61 +50,57 @@ class Board
     HEREDOC
   end
 
-  def position_update(position, marker)
+  def update_position(position, marker)
     @positions[position] = marker
   end
 
-  def position_check(position)
+  def check_position(position)
     true if @positions[position].is_a? Numeric
   end
 
   def mark_position(position, marker)
-    if position_check(position)
-      position_update(position, marker)
+    if check_position(position)
+      update_position(position, marker)
       true
     else
-      puts 'Not valid position. Try again.'
+      puts 'Not an open position. Try again.'
       false
     end
   end
 
-  def full_check
+  def check_full
     unless @positions.any? { |i| i.is_a?(Integer) }
-      puts 'The board is full.'
       true
     end
   end
 
-  def win_check
-    winning_combo_check ? true : false
+  def check_win
+    check_winning_combo ? true : false
   end
 
-  def winning_combo_check
+  def check_winning_combo
     if @positions[0] == 'X' && @positions[1] == 'X' && @positions[2] == 'X' ||
        @positions[3] == 'X' && @positions[4] == 'X' && @positions[5] == 'X' ||
        @positions[6] == 'X' && @positions[7] == 'X' && @positions[8] == 'X' ||
-       @positions[0] == 'X' && @positions[3] == 'X' && @positions[6] == 'X' ||       
+       @positions[0] == 'X' && @positions[3] == 'X' && @positions[6] == 'X' ||
        @positions[1] == 'X' && @positions[4] == 'X' && @positions[7] == 'X' ||
        @positions[2] == 'X' && @positions[5] == 'X' && @positions[8] == 'X' ||
        @positions[0] == 'X' && @positions[4] == 'X' && @positions[8] == 'X' ||
-       @positions[2] == 'X' && @positions[4] == 'X' && @positions[6] == 'X' 
-       puts 'X wins.'
-       true
-    elsif @positions[0] == 'O' && @positions[1] == 'O' && @positions[2] == 'O' ||
-          @positions[3] == 'O' && @positions[4] == 'O' && @positions[5] == 'O' ||
-          @positions[6] == 'O' && @positions[7] == 'O' && @positions[8] == 'O' ||
-          @positions[0] == 'O' && @positions[3] == 'O' && @positions[6] == 'O' ||
-          @positions[1] == 'O' && @positions[4] == 'O' && @positions[7] == 'O' ||
-          @positions[2] == 'O' && @positions[5] == 'O' && @positions[8] == 'O' ||
-          @positions[0] == 'O' && @positions[4] == 'O' && @positions[8] == 'O' ||
-          @positions[2] == 'O' && @positions[4] == 'O' && @positions[6] == 'O'
-          puts 'O wins.'
-          true
+       @positions[2] == 'X' && @positions[4] == 'X' && @positions[6] == 'X' ||
+       @positions[0] == 'O' && @positions[1] == 'O' && @positions[2] == 'O' ||
+       @positions[3] == 'O' && @positions[4] == 'O' && @positions[5] == 'O' ||
+       @positions[6] == 'O' && @positions[7] == 'O' && @positions[8] == 'O' ||
+       @positions[0] == 'O' && @positions[3] == 'O' && @positions[6] == 'O' ||
+       @positions[1] == 'O' && @positions[4] == 'O' && @positions[7] == 'O' ||
+       @positions[2] == 'O' && @positions[5] == 'O' && @positions[8] == 'O' ||
+       @positions[0] == 'O' && @positions[4] == 'O' && @positions[8] == 'O' ||
+       @positions[2] == 'O' && @positions[4] == 'O' && @positions[6] == 'O'
+      true
     end
   end
 end
 
-class Player
+class Players
 
   def initialize
     @player1 = 'X'
@@ -78,7 +108,7 @@ class Player
     @current_player = @player1
   end
 
-  def player_swap
+  def swap_player
     @current_player = if @current_player == @player1
                         @player2
                       else
@@ -102,40 +132,5 @@ class Player
   end
 end
 
-class Game
-  def initialize
-    @board = Board.new
-    @player = Player.new
-  end
-
-  def start_game
-    until end_game
-      @board.display_board
-      current_player_pick = @player.get_current_player_pick
-      current_player_position = current_player_pick - 1
-      current_player = @player.show_current_player 
-        if @board.mark_position(current_player_position, current_player)
-          @player.player_swap
-        end
-    end
-  end
-
-  def end_game
-    if @board.win_check
-      @board.display_board
-      winner = @player.show_current_player
-      puts "#{winner} wins. Pizza pizza."
-      true
-    elsif @board.full_check
-      @board.display_board
-      puts "Tie. Game over."
-      true
-    end
-  end
-end
-
 tic_tac_toe = Game.new
 tic_tac_toe.start_game
-
-# How to announce winner from Game class, not Board class
-# Fix player swap screw up in announcing winner

@@ -31,6 +31,25 @@ Repeat steps until checks find winner or tie
 
 *Rubyish Pseudo Code*
 ~~~
+Game class
+
+  Initialize Game
+    Make new instance of board
+    Make new instance of player
+
+  Start Game
+    Start loop
+      Until End Game is true
+        Display Board for board instance
+        Set variable for player instance pick
+        Set variable for player instance current player
+        Mark Position for board instance with pick and current player variables
+        Current Player Swap for player instance
+  
+  End Game
+    If board instance Full Check of Win Check
+      Return true
+      
 Board class
 
   Initialize Board
@@ -76,25 +95,6 @@ Player class
   
   Show Current Player
     Return current player when called
-
-Game class
-
-  Initialize Game
-    Make new instance of board
-    Make new instance of player
-
-  Start Game
-    Start loop
-      Until End Game is true
-        Display Board for board instance
-        Set variable for player instance pick
-        Set variable for player instance current player
-        Mark Position for board instance with pick and current player variables
-        Current Player Swap for player instance
-  
-  End Game
-    If board instance Full Check of Win Check
-      Return true
 
 Set variable to new instance of Game class
 With variable call Start Game method  
