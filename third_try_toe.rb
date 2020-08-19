@@ -2,33 +2,44 @@ class Game
 
   def initialize
     @board = Board.new
-    @player = Player.new
+    @player_1 = Player.new('X')
+    @player_2 = Player.new('O')
+    @current_player = @player_1
   end
 
   def start_game
     until end_game
       @board.display_board
-      current_player_pick = @player.get_current_player_pick
+      puts "#{@current_player.name} it's your turn!"
+      current_player_pick = @current_player.take_turn
       current_player_position = current_player_pick - 1
-      current_player = @player.show_current_player 
-        if @board.mark_position(current_player_position, current_player)
-          @player.swap_player
-        end
+      current_marker = @current_player.marker
+      if @board.mark_position(current_player_position, current_marker)
+        swap_player
+      end
     end
   end
 
   def end_game
     if @board.check_win
       @board.display_board
-      @player.swap_player
-      winner = @player.show_current_player
+      swap_player
+      winner = @current_player.name
       puts "#{winner} wins!"
       true
     elsif @board.check_full
       @board.display_board
-      puts "Tie. Game over."
+      puts 'Tie. Game over.'
       true
     end
+  end
+
+  def swap_player
+    @current_player = if @current_player == @player_1
+                        @player_2
+                      else
+                        @player_1
+                      end
   end
 end
 
@@ -69,9 +80,7 @@ class Board
   end
 
   def check_full
-    unless @positions.any? { |i| i.is_a?(Integer) }
-      true
-    end
+    @positions.all? { |i| i.is_a?(String) }
   end
 
   def check_win
@@ -101,34 +110,23 @@ class Board
 end
 
 class Player
+  attr_reader :name, :marker
 
-  def initialize
-    @player1 = 'X'
-    @player2 = 'O'
-    @current_player = @player1
+  def initialize(marker)
+    @marker = marker
+    puts "Player #{@marker}, what is your name?"
+    @name = gets.chomp
   end
 
-  def swap_player
-    @current_player = if @current_player == @player1
-                        @player2
-                      else
-                        @player1
-                      end
-  end
-
-  def get_current_player_pick
+  def take_turn
     loop do
-      puts "#{@current_player} pick an open number: "
+      puts 'Pick an open number: '
       @pick = gets.chomp.to_i
-      if @pick.between?(1,9)
+      if @pick.between?(1, 9)
         break
       end
     end
     @pick
-  end
-
-  def show_current_player
-    @current_player
   end
 end
 
