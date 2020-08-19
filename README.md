@@ -6,7 +6,7 @@ Project: Tic Tac Toe
 
 Write a program where two different users alternate turns selecting positions on a grid. The board must be displayed and updated between turns. Only one user can occupy a position at a time. There are nine positions on the grid. A user wins and ends the game by holding three consequtive positions in a grid direction, horizontal, vertical or diagonal. Otherwise the game ends in a tie when all positions are filled.
 
-*Pseudo Code:*
+*Original Pseudo Code:*
 ~~~
 Command line asks for Player 1 pick
 Player 1 pick is checked for availability on board
@@ -27,28 +27,79 @@ If open
 Computer checks for winner, tie or next turn
 Updated board is displayed
 Repeat steps until checks find winner or tie
+~~~
 
-Checks: (Each check could be seperate method)
-If 3 consecutive found
-  Player wins
-Else If all positions == occupied
-  Tie
-Else
-  Check for next turn
+*Rubyish Pseudo Code*
+~~~
+Board class
+
+  Initialize Board
+    Board has 9 positions
+    Position markers start empty
+
+  Display Board
+    Output an arrangement of current grid positions
+
+  Position Update
+    Replace array value with marker value
+  
+  Position Check
+    Check if poisition is available by seeing if it's a number
+  
+  Mark
+    Use arguments of position pick and marker value
+    Call Position Check
+    Call Position Update
+  
+  Full Check
+    If all positions have value
+      Return true
+  
+  Win Check
+    If a hard-coded winning value exists
+      Return marker value
+
+Player class
+
+  Initialize Player
+    Assign markers to players
+    Default current player to player 1
+  
+  Current Player Swap
+    When called, swap player for other player
+    
+  Get Pick
+    Start loop
+      Ask current player for their pick
+      Validate pick format
+      Break loop if valid
+  
+  Show Current Player
+    Return current player when called
+
+Game class
+
+  Initialize Game
+    Make new instance of board
+    Make new instance of player
+
+  Start Game
+    Start loop
+      Until End Game is true
+        Display Board for board instance
+        Set variable for player instance pick
+        Set variable for player instance current player
+        Mark Position for board instance with pick and current player variables
+        Current Player Swap for player instance
+  
+  End Game
+    If board instance Full Check of Win Check
+      Return true
+
+Set variable to new instance of Game class
+With variable call Start Game method  
+~~~
 
 
 
-Position 1
-Position 2
-Position 3
-Position 4
-Position 5
-Position 6
-Position 7
-Position 8
-Position 9
 
-if user enters number 1 -9
-  Position.new(3)
-
-Some talking about multiple .rb files, one for main, one for Players, one for board
