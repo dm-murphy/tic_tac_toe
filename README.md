@@ -1,12 +1,12 @@
-Project: Tic Tac Toe
+# Project: Tic Tac Toe
 
 (https://www.theodinproject.com/lessons/oop)
 
-*Problem:*
+### *Problem:*
 
 Write a program where two different users alternate turns selecting positions on a grid. The board must be displayed and updated between turns. Only one user can occupy a position at a time. There are nine positions on the grid. A user wins and ends the game by holding three consequtive positions in a grid direction, horizontal, vertical or diagonal. Otherwise the game ends in a tie when all positions are filled.
 
-*Original Pseudo Code:*
+### *Original Pseudo Code:*
 ~~~
 Command line asks for Player 1 pick
 Player 1 pick is checked for availability on board
@@ -29,7 +29,7 @@ Updated board is displayed
 Repeat steps until checks find winner or tie
 ~~~
 
-*Rubyish Pseudo Code*
+### *Rubyish Pseudo Code:*
 ~~~
 Game class
 
