@@ -14,9 +14,7 @@ class Game
       current_player_pick = @current_player.take_turn
       current_player_position = current_player_pick - 1
       current_marker = @current_player.marker
-      if @board.mark_position(current_player_position, current_marker)
-        swap_player
-      end
+      swap_player if @board.mark_position(current_player_position, current_marker)
     end
   end
 
@@ -122,9 +120,7 @@ class Player
     loop do
       puts 'Pick an open number: '
       @pick = gets.chomp.to_i
-      if @pick.between?(1, 9)
-        break
-      end
+      break if @pick.between?(1, 9)
     end
     @pick
   end
