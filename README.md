@@ -1,6 +1,10 @@
 # Project: Tic Tac Toe
 
-(https://www.theodinproject.com/lessons/oop)
+https://www.theodinproject.com/lessons/oop
+
+### Play it Live on Repl.it
+
+https://repl.it/@dmmurphy/RubyProjectTicTacToe#main.rb
 
 ### *Problem:*
 
