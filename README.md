@@ -35,32 +35,37 @@ Game class
 
   Initialize Game
     Make new instance of board
-    Make new instance of player
+    Make new instance of player 1
+    Make new instance of player 2
+    Set current player to player 1
 
   Start Game
     Start loop
       Until End Game is true
         Display Board for board instance
+        Announce current player turn
         Set variable for player instance pick
-        Set variable for player instance current player
+        Set variable for player instance marker
         Mark Position for board instance with pick and current player variables
-        Current Player Swap for player instance
+        Swap players if valid
   
   End Game
-    If board instance Full Check of Win Check
-      Return true
+    If board instance Full Check or Win Check
+      Return true and declare game outcome
+  
+  Current Player Swap
+    When called, swap player for other player
       
 Board class
 
   Initialize Board
     Board has 9 positions
-    Position markers start empty
 
   Display Board
     Output an arrangement of current grid positions
 
   Position Update
-    Replace array value with marker value
+    Replace array integer value with marker value
   
   Position Check
     Check if poisition is available by seeing if it's a number
@@ -75,26 +80,26 @@ Board class
       Return true
   
   Win Check
-    If a hard-coded winning value exists
-      Return marker value
+    Check if a Winning Combo exists
+
+  Winning Combo Check
+    If a hard-coded winning values exists
+      Return true
 
 Player class
+  Set name, marker
 
   Initialize Player
-    Assign markers to players
-    Default current player to player 1
+    Assign instance marker to parameter marker
+    Ask for player name
+    Get name from player and assign to instance name
   
-  Current Player Swap
-    When called, swap player for other player
-    
-  Get Pick
+  Take Turn
     Start loop
       Ask current player for their pick
       Validate pick format
       Break loop if valid
-  
-  Show Current Player
-    Return current player when called
+      Return pick
 
 Set variable to new instance of Game class
 With variable call Start Game method  
